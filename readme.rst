@@ -32,7 +32,7 @@ clone this repo into it using the following command:
 
 .. code:: sh
 
-    git clone git@github.com:nprapps/interactive-template interactive
+    git clone git@github.com:thecityny/interactive-template interactive
 
 (We want to clone into the "interactive" folder so that we can run
 ``grunt-init interactive`` and not ``grunt-init interactive-template``.)
