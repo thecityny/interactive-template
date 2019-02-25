@@ -1,4 +1,4 @@
-Interactive Template
+THE CITY's Interactive Template
 =====================
 
 What is it?
