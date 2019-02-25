@@ -11,7 +11,7 @@ exports.template = function(grunt, init, done) {
     init.prompt("author_name"),
     init.prompt("app_name", here),
     init.prompt("app_description"),
-    init.prompt("github_repo", "nprapps/" + here)
+    init.prompt("github_repo", "thecityny/" + here)
   ], function(err, props) {
     //add environment variables, dynamic properties
     
