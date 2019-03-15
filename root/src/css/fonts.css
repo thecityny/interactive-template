@@ -36,32 +36,30 @@
   font-family: 'Sharp Grotesk';
   font-display: auto;
   src: url('../assets/fonts/SharpGroteskBook20.woff') format('woff'),
-			 url('../assets/fonts/SharpGroteskBook20.woff2') format('woff2');
-  font-weight: 400;       
+			 url('../assets/fonts/SharpGroteskBook20.woff2') format('woff2');      
 }
 
 @font-face {
   font-family: 'Sharp Grotesk';
   font-display: auto;
-  src: url('../assets/fonts/SharpGroteskBookItalic20.woff') format('woff');
-  src: url('../assets/fonts/SharpGroteskBookItalic20.woff2') format('woff2');
-  font-weight: 400;
+  src: url('../assets/fonts/SharpGroteskBookItalic20.woff') format('woff'),
+			 url('../assets/fonts/SharpGroteskBookItalic20.woff2') format('woff2');
   font-style: italic;       
 }
 
 @font-face {
   font-family: 'Sharp Grotesk';
   font-display: auto;
-  src: url('../assets/fonts/SharpGroteskLight20.woff') format('woff');
-  src: url('../assets/fonts/SharpGroteskLight20.woff2') format('woff2');
+  src: url('../assets/fonts/SharpGroteskLight20.woff') format('woff'),
+			 url('../assets/fonts/SharpGroteskLight20.woff2') format('woff2');
   font-weight: 200;      
 }
 
 @font-face {
   font-family: 'Sharp Grotesk';
   font-display: auto;
-  src: url('../assets/fonts/SharpGroteskLightItalic20.woff') format('woff');
-  src: url('../assets/fonts/SharpGroteskLightItalic20.woff2') format('woff2');
+  src: url('../assets/fonts/SharpGroteskLightItalic20.woff') format('woff'),
+			 url('../assets/fonts/SharpGroteskLightItalic20.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;    
 }
