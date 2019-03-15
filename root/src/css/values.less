@@ -8,40 +8,57 @@
 /*
  * Fonts
  */
-@gotham: 'Gotham SSm', Helvetica, Arial, sans-serif;
-@knockout: 'Knockout 31 4r','Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-@sans: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-@serif: Georgia, "Times New Roman", Times, serif;
+@sans: 'Sharp Grotesk', Helvetica, sans-serif;
+@serif: 'Georgia', serif;
+@mono: 'Courier', monospace;
 
-.gotham() {
-    font-family: @gotham;
-    font-weight: normal;
+.boldface() {
+    font-family: @sans;
+    font-weight: 900;
+}
+
+.boldface-ital() {
+    font-family: @sans;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.medface() {
+    font-family: @sans;
+    font-weight: 700;
+}
+
+.medface-ital() {
+    font-family: @sans;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.bookface() {
+    font-family: @sans;
     font-weight: 400;
 }
 
-// Normal Knockout
-.knockout() {
-    font-family: @knockout;
-    font-weight: normal;
+.bookface-ital() {
+    font-family: @sans;
+    font-weight: 400;
+    font-style: italic;
 }
 
-// Knockout, uppercased
-.knockout-upper() {
-    .knockout();
-    text-transform: uppercase;
+.lightface() {
+    font-family: @sans;
+    font-weight: 200;
 }
 
-// Knockout for headings
-.knockout-header() {
-    .knockout-upper();
-    letter-spacing: 0.05em;
-    -webkit-font-smoothing: antialiased;
+.lightface-ital() {
+    font-family: @sans;
+    font-weight: 200;
+    font-style: italic;
 }
 
 /*
  * Colors
  */
-
 @city-white: #ebebeb;
 @city-grey: #8f8f8f;
 @city-black: #111111;
