@@ -4,10 +4,10 @@
 <title><%= project.title %></title>
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://media.npr.org/templates/favicon/favicon-180x180.png" />
-<link rel="icon" sizes="96x96" href="https://media.npr.org/templates/favicon/favicon-96x96.png" />
-<link rel="icon" sizes="32x32" href="https://media.npr.org/templates/favicon/favicon-32x32.png" />
-<link rel="icon" sizes="16x16" href="https://media.npr.org/templates/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/favicon@180.png" />
+<link rel="icon" sizes="96x96" href="assets/favicons/favicon@96.png" />
+<link rel="icon" sizes="32x32" href="assets/favicons/favicon@32.png" />
+<link rel="icon" sizes="16x16" href="assets/favicons/favicon@16.png" />
 
 <!-- Safari, you're the worst -->
 <meta name='format-detection' content='telephone=no'>
@@ -46,11 +46,11 @@
   },
   "author": {
     "@type": "Person",
-    "name": "NPR Staff"
+    "name": "<%= project.author %>"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "NPR",
+    "name": "THE CITY",
     "logo": {
       "@type": "ImageObject",
       "url": "<%= project.url %>assets/logo.png",
@@ -62,12 +62,7 @@
 }
 </script>
 
-<!-- Chartbeat top -->
-<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-
 <%
 // if !project.embedded...
 } 
 %>
-
-<%= t.include("partials/_webfonts.html") %>
