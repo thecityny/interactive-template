@@ -1,0 +1,43 @@
+<%/* in the line below replace 'archie_template' with your google doc slug */%>
+
+<%= console.log(archieml.archie_template) %>
+
+<main>
+  <% archieml.archie_template.story.forEach(function(item){ %>
+
+    <%/* pulls in body text */%>
+    <% if (item.type == 'text') { %>
+      <p class='copy'><%= item.value %></p>
+    <% } %>
+
+    <%/* pulls in subheads */%>
+    <% if (item.type == 'subhead') { %>
+      <h3 class='subhead'><%= item.value.text %></h3>
+    <% } %>
+
+    <%/* pulls in photos */%>
+    <% if (item.type == 'image') { %>
+      <figure class='photo'>
+        <img src='<%= item.value.src %>' alt='<%= item.value.alt %>' />
+        <figcaption><%= item.value.caption %></figcaption>
+      </figure>
+    <% } %>
+
+    <%/* pulls in custom elements */%>
+    <% if (item.type == 'custom') { %>
+      <% let custom = item.value.src %>
+      <%= t.include(custom) %>
+    <% } %>
+
+    <%/* pulls in quotes */%>
+    <% if (item.type == 'quote') { %>
+      <div class='quote-container'>
+        <p class='quote'><%= item.value.text %></p>
+        <p class='quote-attr'>
+          <span class='quote-name'><%= item.value.name %></span>
+          <span class='quote-title'><%= item.value.title %></span>
+        </p>
+    <% } %>
+
+  <% }); %>
+</main>
