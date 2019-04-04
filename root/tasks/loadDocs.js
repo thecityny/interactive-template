@@ -21,14 +21,24 @@ module.exports = function(grunt) {
 
     var drive = google.drive({ auth, version: "v3" });
 
-    async.each(config.docs, async function(fileId) {
-      var meta = await drive.files.get({ fileId });
-      var name = meta.data.name.replace(/\s+/g, "_") + ".docs.txt";
-      var body = await drive.files.export({ fileId, mimeType: "text/plain" });
-      var text = body.data.replace(/\r\n/g, "\n");
-      console.log(`Writing document as data/${name}`);
-      grunt.file.write(path.join("data", name), text);
-    }, done);
+    /*
+     * Large document sets may hit rate limits; you can find details on your quota at:
+     * https://console.developers.google.com/apis/api/drive.googleapis.com/quotas?project=<project>
+     * where <project> is the project you authenticated with using `grunt google-auth`
+     */
+    async.eachLimit(
+      config.docs,
+      2, // adjust this up or down based on rate limiting
+      async function(fileId) {
+        var meta = await drive.files.get({ fileId });
+        var name = meta.data.name.replace(/\s+/g, "_") + ".docs.txt";
+        var body = await drive.files.export({ fileId, mimeType: "text/plain" });
+        var text = body.data.replace(/\r\n/g, "\n");
+        console.log(`Writing document as data/${name}`);
+        grunt.file.write(path.join("data", name), text);
+      },
+      done
+    );
 
   });
 }

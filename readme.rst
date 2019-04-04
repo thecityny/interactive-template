@@ -35,7 +35,8 @@ clone this repo into it using the following command:
     git clone https://github.com/thecityny/interactive-template.git interactive
 
 (We want to clone into the "interactive" folder so that we can run
-``grunt-init interactive`` and not ``grunt-init interactive-template``.)
+``grunt-init interactive`` and not ``grunt-init interactive-template``.
+``grunt-init`` uses the name of the folder as the name of the template to init.)
 
 If it works, you should be able to ``ls ~/.grunt-init/interactive`` and get back a
 list of files. That's it! Now let's start a sample project to see how it all
@@ -44,17 +45,21 @@ works.
 Getting Started
 ---------------
 
-For our first project, we'll do something pretty simple. Make a new
-folder for your project, open a shell there, and type:
+For our first project, we'll do something pretty simple. Open a terminal,
+make a new folder for your project, and run ``grunt-init``:
 
 .. code:: sh
 
+    cd ~
+    mkdir example-app
+    cd example-app
     grunt-init interactive
 
 The scaffolding wizard will ask you to fill in some information, such as
 your name, the name of the project, a description. Once that's done,
-it'll set up some folders and source files for you, and install the NPM
-modules needed for this project. After it hands you back to the prompt,
+it'll set up some folders and source files for you in the current directory
+(the one seen in the output of ``pwd``), and install the NPM
+modules needed for this project. After ``grunt-init`` hands you back to the prompt,
 type ``grunt`` at the command line to compile the project and start a
 local development server at ``http://localhost:8000``.
 
@@ -80,7 +85,8 @@ Data and Templating
 -------------------
 
 The ``index.html`` template (and any other templates you choose to add
-to the project) are processed using Grunt's built in Lo-dash templating
+to the project) are processed using Grunt's built-in
+`Lo-dash templating <https://gruntjs.com/api/grunt.template>`_
 (HTML files starting with an ``_`` will be ignored). If you have any CSV
 files located in your ``data`` directory, these will be parsed and made
 available to your templates via the ``csv`` object (likewise, JSON files
@@ -138,7 +144,8 @@ This will load our ad block, sized for a "banner" slot (other common slots are "
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an EJS template the same as HTML, so you can mix in data and
+be treated as an `EJS-like template <http://lodash.com/docs/#template>`_
+the same as HTML, so you can mix in data and
 generate code inline. However, rather than embedding HTML templates into your
 content, we strongly recommend using `ArchieML <http://archieml.org>`_ to load
 content in pieces into your regular HTML templates. Any file with a ``.txt``
@@ -152,9 +159,12 @@ You can still use Markdown syntax in ArchieML files by using the
 
 The template also includes a task (``docs``) for downloading Google Docs, much
 the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
-and then loaded as ArchieML. Access to Docs requires your machine to have a
+and then loaded as ArchieML.
+
+Access to Docs requires your machine to have a
 Google OAuth token, which is largely the same as described in `this post
 <http://blog.apps.npr.org/2015/03/02/app-template-oauth.html>`_.
+You can obtain a token by running ``grunt google-auth``.
 
 Client-side Code
 ----------------
@@ -261,8 +271,7 @@ the project.
 -  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
    templating
 -  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading 
-    private files from Google
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``docs`` - Download Google Docs and save as .txt
 -  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
@@ -271,13 +280,10 @@ the project.
 -  ``less`` - Compile LESS files into CSS
 -  ``bundle`` - Compile JS into the app.js file
 -  ``publish`` - Push files to S3 or other endpoints
--  ``auth`` - Create an ``auth.json`` file from the AWS environment 
-   variables
+-  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
 -  ``connect`` - Start the dev server
--  ``watch`` - Watch various directories and perform partial builds when
-   they change
--  ``static`` - Run all generation tasks, but do not start the watches
-   or dev server
+-  ``watch`` - Watch various directories and perform partial builds when they change
+-  ``static`` - Run all generation tasks, but do not start the watches or dev server
 
 The publish task deserves a little more attention. When you run ``grunt 
 publish``, it will read your AWS credentials from the standard AWS 
@@ -302,19 +308,21 @@ Where does everything go?
     │   ├── app.js
     │   ├── index.html
     │   └── style.css
-    ├── data - folder for all JSON/CSV data files
+    ├── data - folder for all JSON/CSV/ArchieML data files
     ├── Gruntfile.js
     ├── package.json - Node dependencies and metadata
     ├── project.json - various project configuration
     ├── src
-    │   ├── assets - files will be automatically copied to /build
+    │   ├── assets - files will be automatically copied to /build/assets
     │   ├── css
-    │   │   └── seed.less
+    │   │   ├── base.less
+    │   │   ├── seed.less
+    │   │   └── values.less
     │   ├── index.html
     │   ├── partials - directory containing boilerplate template sections
     │   └── js
     │       ├── main.js
-    │       └── lib - directory for Bower, ST site modules
+    │       └── lib - directory for useful micro-modules
     └── tasks - All Grunt tasks
         ├── archieml.js
         ├── build.js
