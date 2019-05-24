@@ -88,8 +88,8 @@ module.exports = function(grunt) {
           Bucket: bucketConfig.bucket,
           Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
           Body: upload.buffer,
-          ACL: "public-read",
-          ContentType: mime.lookup(upload.path),
+          // ACL: "public-read",
+          ContentType: mime.getType(upload.path),
           CacheControl: "public,max-age=300"
         });
       }, function(obj, next) {

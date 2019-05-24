@@ -114,14 +114,21 @@ our ``index.html`` file to output this as an HTML table::
 In addition to on-disk data, you can set the template to import data from
 Google Sheets. This is a great option for collaborating with other newsroom
 staff, who may find Google Drive easier than Excel (especially when it comes
-to sharing files). To configure your project for import, open the
-``project.json`` file and add your workbook key to the ``sheets`` array found
-there. You'll also need to use the "Publish to Web" menu item in the Sheets UI
-(under file) to open up API access, or run ``grunt google-auth`` to create a
-local OAuth token. Once those conditions are met, running ``grunt sheets``
-will download the data from Google and cache it as JSON (one file per
-worksheet). As with CSV, the data will be stored as an array unless one of
-your columns is named "key," in which case it'll be stored as a hash table.
+to sharing files). You'll also need to run ``grunt google-auth`` to create a
+local OAuth token before you can talk to the API. One authenticated, the
+easiest way to link a sheet to your project is to create it from the command
+line task::
+
+    grunt google-create --type=sheets --name="My Document Name"
+
+This will generate the file in your Drive account and add its key to the
+project configuration. You can also import existing sheets by their IDs: open
+the ``project.json`` file and add your workbook key to the ``sheets`` array
+found there.  Once the workbook key is set and you're authenticated, running
+``grunt sheets`` will download the data from Google and cache it as JSON (one
+file per worksheet). As with CSV, the data will be stored as an array unless
+one of your columns is named "key," in which case it'll be stored as a hash
+table.
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
@@ -144,22 +151,23 @@ This will load our ad block, sized for a "banner" slot (other common slots are "
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an `EJS-like template <http://lodash.com/docs/#template>`_
-the same as HTML, so you can mix in data and
-generate code inline. However, rather than embedding HTML templates into your
-content, we strongly recommend using `ArchieML <http://archieml.org>`_ to load
-content in pieces into your regular HTML templates. Any file with a ``.txt``
-extension in the ``data`` folder will be exposed as ``archieml.{filename}``.
-You can still use Markdown syntax in ArchieML files by using the
-``t.renderMarkdown()`` function in your templates to process content::
+be treated as an `EJS-like template <http://lodash.com/docs/#template>`_ the
+same as HTML, so you can mix in data and generate code inline. However, rather
+than embedding HTML templates into your content, we strongly recommend using
+`ArchieML <http://archieml.org>`_ to load text and data chunks into your
+regular HTML templates. Any file with a ``.txt`` extension in the ``data``
+folder will be exposed as ``archieml.{filename}``. You can still use Markdown
+syntax in ArchieML files by using the ``t.renderMarkdown()`` function in your
+templates to process content::
 
     <main class="article">
       <%= t.renderMarkdown(archieml.story.intro) %>
     </main>
 
 The template also includes a task (``docs``) for downloading Google Docs, much
-the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
-and then loaded as ArchieML.
+the same way as Sheets, and the ``google-create`` task can be used to
+automatically create/link them if you specify ``--type=docs``. They'll be
+cached as ``.docs.txt`` in the data folder, and then loaded as ArchieML.
 
 Access to Docs requires your machine to have a
 Google OAuth token, which is largely the same as described in `this post
@@ -180,8 +188,8 @@ Now we'll change ``src/js/main.js`` to load Leaflet:
 
 .. code:: javascript
 
-    var $ = require("leaflet"); //load Leaflet from an NPM module
-    console.log($);
+    var L = require("leaflet"); //load Leaflet from an NPM module
+    console.log(L);
 
 When we restart our dev server by running the ``grunt`` command, the
 ``bundle`` task will scan the dependencies it finds, starting in
@@ -207,19 +215,15 @@ Typically, you shouldn't need to load jQuery on a project, because these
 micro-modules cover most of its functionality, as well as some additional
 useful tools:
 
-* ``ads.js`` - Enables ads when combined with the template partial
 * ``animateScroll.js`` - Scroll to an element with a nice transition
 * ``closest.js`` - Equivalent of jQuery.closest()
-* ``colors.js`` - Contains JS versions of our style palette
-* ``comments.js`` - Enables LiveFyre comments
 * ``debounce.js`` - Equivalent of Underscore's debounce()
 * ``delegate.js`` - Equivalent of calling jQuery.on() with event delegation
 * ``dom.js`` - Build HTML in JS, similar to React.createElement()
 * ``dot.js`` - Compile client-side EJS templates with the same syntax used by the build system
 * ``flip.js`` - Animate smoothly using `FLIP <https://aerotwist.com/blog/flip-your-animations/>`_
-* ``geolocation.js`` - Geocode addresses to lat/longs, or get the user's current location
-* ``paywall.js`` - Enables the paywall, requires the ID of the link post from WordPress
 * ``prefixed.js`` - Used to access prefixed features in other browsers (mostly used by other modules)
+* ``pym.js`` - Initializes this page as a Pym child
 * ``qsa.js`` - Equivalent to jQuery's DOM search functions
 * ``tracking.js`` - Lets you fire custom events into GA for analytics
 * ``xhr.js`` - Equivalent to jQuery.ajax()
@@ -268,22 +272,24 @@ including some tasks that do not run as a part of the normal build.
 Remember that you can use ``grunt --help`` to list all tasks included in
 the project.
 
--  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
-   templating
--  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
--  ``sheets`` - Download data from Google Sheets and save as JSON files
--  ``docs`` - Download Google Docs and save as .txt
--  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
--  ``archieml`` - Load ArchieML files onto ``grunt.data.archieml``
--  ``template`` - Load data files and process HTML templates
--  ``less`` - Compile LESS files into CSS
--  ``bundle`` - Compile JS into the app.js file
--  ``publish`` - Push files to S3 or other endpoints
+-  ``archieml`` - Load text files onto ``grunt.data.archieml``
 -  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
+-  ``bundle`` - Compile JS into the app.js file
+-  ``clean`` - Delete the build folder to start again from scratch
 -  ``connect`` - Start the dev server
--  ``watch`` - Watch various directories and perform partial builds when they change
+-  ``copy`` - Copy all assets over to the build folder
+-  ``csv`` - Load CSV files onto ``grunt.data.csv``
+-  ``docs`` - Download Google Docs and save as .txt
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
+-  ``google-create`` - Create a Google Drive file and link it into the project config
+-  ``json`` - Load JSON files onto ``grunt.data.json``
+-  ``less`` - Compile LESS files into CSS
+-  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
+-  ``publish`` - Push files to S3 or other endpoints
+-  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``static`` - Run all generation tasks, but do not start the watches or dev server
+-  ``template`` - Load data files and process HTML templates
+-  ``watch`` - Watch various directories and perform partial builds when they change
 
 The publish task deserves a little more attention. When you run ``grunt 
 publish``, it will read your AWS credentials from the standard AWS 
@@ -314,34 +320,13 @@ Where does everything go?
     ├── project.json - various project configuration
     ├── src
     │   ├── assets - files will be automatically copied to /build/assets
-    │   ├── css
-    │   │   ├── base.less
-    │   │   ├── seed.less
-    │   │   └── values.less
+    │   ├── css - LESS files
     │   ├── index.html
     │   ├── partials - directory containing boilerplate template sections
     │   └── js
     │       ├── main.js
     │       └── lib - directory for useful micro-modules
     └── tasks - All Grunt tasks
-        ├── archieml.js
-        ├── build.js
-        ├── bundle.js
-        ├── checklist.txt
-        ├── clean.js
-        ├── connect.js
-        ├── copyAssets.js
-        ├── cron.js
-        ├── googleauth.js
-        ├── less.js
-        ├── loadCSV.js
-        ├── loadDocs.js
-        ├── loadJSON.js
-        ├── loadSheets.js
-        ├── markdown.js
-        ├── publish.js
-        ├── state.js
-        └── watch.js
 
 How do I extend the template?
 -----------------------------
