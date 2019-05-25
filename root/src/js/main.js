@@ -1,2 +1,2 @@
-// var pym = require("./lib/pym");
-// require("./lib/ai2html-resizer");
+// const pym = require("./lib/pym");
+// const ai2html = require("./lib/ai2html-resizer");

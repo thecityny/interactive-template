@@ -1,8 +1,11 @@
-var { transform, transformOrigin } = require("./prefixed");
+var {
+  transform,
+  transformOrigin
+} = require("./prefixed");
 
 module.exports = function(element, mutate) {
   var first = element.getBoundingClientRect();
-  
+
   mutate();
 
   var last = element.getBoundingClientRect();

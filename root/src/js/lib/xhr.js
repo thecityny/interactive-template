@@ -9,7 +9,8 @@ module.exports = function(url, callback) {
     if (url.match(/json/)) {
       try {
         data = JSON.parse(data);
-      } catch (err) { /* oh well */ }
+      } catch (err) {
+        /* oh well */ }
     }
     callback(null, data);
   }

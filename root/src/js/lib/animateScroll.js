@@ -3,7 +3,7 @@ var raf = window[require("./prefixed").requestAnimationFrame];
 var animating = false;
 
 var noop = function() {};
-var ease = v => 0.5 - Math.cos( v * Math.PI ) / 2;
+var ease = v => 0.5 - Math.cos(v * Math.PI) / 2;
 
 module.exports = function(element, duration = 500, done = noop) {
   if (animating) return;

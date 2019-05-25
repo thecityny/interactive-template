@@ -1,7 +1,7 @@
 var exec = require("child_process").exec;
 var path = require("path");
 
-exports.description = "A standard starting-point for news app development at NPR."
+exports.description = "A standard starting-point for news app development at THE CITY."
 exports.template = function(grunt, init, done) {
   //prelims
   var here = path.basename(process.cwd());
@@ -14,7 +14,7 @@ exports.template = function(grunt, init, done) {
     init.prompt("github_repo", "thecityny/" + here)
   ], function(err, props) {
     //add environment variables, dynamic properties
-    
+
     var root = init.filesToCopy(props);
     init.copyAndProcess(root, props, { noProcess: "src/assets/**" });
     grunt.file.mkdir("data");

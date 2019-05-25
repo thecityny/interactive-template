@@ -34,35 +34,35 @@
 
 <!-- Google structured data -->
 <script type="application/ld+json">
-{
-  "@context": "http://schema.org",
-  "@type": "NewsArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "<%= project.url %>"
-  },
-  "headline": "<%= project.title %>",
-  "image": {
-    "@type": "ImageObject",
-    "url": "<%= project.url + project.image %>"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "<%= project.author %>"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "THE CITY",
-    "logo": {
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "<%= project.url %>"
+    },
+    "headline": "<%= project.title %>",
+    "image": {
       "@type": "ImageObject",
-      "url": "<%= project.url %>assets/logo.png",
-      "width": 2176,
-      "height": 725
-    }
-  },
-  "description": "<%= project.description %>",
-  "datePublished": "<%= new Date().toISOString() %>"
-}
+      "url": "<%= project.url + project.image %>"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "<%= project.author %>"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "THE CITY",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "<%= project.url %>assets/logo.png",
+        "width": 2176,
+        "height": 725
+      }
+    },
+    "description": "<%= project.description %>",
+    "datePublished": "<%= new Date().toISOString() %>"
+  }
 </script>
 
 <%
